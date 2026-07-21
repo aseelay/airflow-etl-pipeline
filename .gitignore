@@ -1,25 +1,30 @@
-# Airflow
-logs/
-airflow/logs/
+# Python
 __pycache__/
 *.pyc
-
-# Environment variables
-.env
-
-# Config & credentials
-config/config.yaml
-config/service_account.json
-
-# Local data
-data/
-*.csv
-*.parquet
-
-# Python cache
 *.pyo
 *.pyd
 
-# OS files
+# Airflow
+logs/
+airflow/logs/
+airflow/*.db
+
+# Environment
+.env
+.venv/
+venv/
+
+# Docker
+*.pid
+
+# Credentials
+*.json
+credentials/
+service_account/
+
+# OS
 .DS_Store
 Thumbs.db
+
+config/config.yaml
+service_account.json
