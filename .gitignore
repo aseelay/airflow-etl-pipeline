@@ -1,0 +1,25 @@
+# Airflow
+logs/
+airflow/logs/
+__pycache__/
+*.pyc
+
+# Environment variables
+.env
+
+# Config & credentials
+config/config.yaml
+config/service_account.json
+
+# Local data
+data/
+*.csv
+*.parquet
+
+# Python cache
+*.pyo
+*.pyd
+
+# OS files
+.DS_Store
+Thumbs.db
