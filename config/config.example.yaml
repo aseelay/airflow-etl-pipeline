@@ -1,0 +1,19 @@
+aws:
+  access_key_id: "YOUR_AWS_ACCESS_KEY_ID"
+  secret_access_key: "YOUR_AWS_SECRET_ACCESS_KEY"
+  region: "us-east-1"
+
+s3:
+  bucket: "your-bucket-name"
+  full_load_path: "full_load/event_data.parquet"
+  incremental_base: "full_load"
+
+google:
+  spreadsheet_id: "YOUR_SPREADSHEET_ID"
+  upload_date_spreadsheet_id: "YOUR_UPLOAD_DATE_SPREADSHEET_ID"
+
+  sheets_to_skip:
+    - "test"
+    - "Template"
+
+  service_account_file: "service_account.json"
