@@ -14,6 +14,42 @@ import time
 
 from urllib.parse import quote
 from datetime import datetime
+import re
+import unicodedata
+
+
+def normalize_arabic(text):
+    """
+    Normalize Arabic text:
+    - Unify alef variants
+    - Remove diacritics
+    - Normalize taa marbuta
+    """
+
+    if pd.isna(text):
+        return text
+
+    text = str(text)
+
+    # Remove Arabic diacritics
+    text = re.sub(
+        r'[\u0617-\u061A\u064B-\u0652]',
+        '',
+        text
+    )
+
+    # Normalize alef variants
+    text = text.replace("أ", "ا")
+    text = text.replace("إ", "ا")
+    text = text.replace("آ", "ا")
+
+    # Normalize taa marbuta
+    text = text.replace("ة", "ه")
+
+    # Remove extra spaces
+    text = " ".join(text.split())
+
+    return text
 
 
 def load_config():
@@ -160,6 +196,20 @@ def transform_incremental():
 
     df.columns = df.columns.str.strip()
 
+    # Normalize Arabic text columns
+    arabic_columns = [
+    "name",
+    "grade",
+    "location",
+    "data_source",
+    "data_source_1",
+    "data_source_2"
+]
+
+    for col in arabic_columns:
+        if col in df.columns:
+           df[col] = df[col].apply(normalize_arabic)
+
     required_columns = ["name", "mobile", "grade"]
 
     df = df.dropna(
@@ -183,8 +233,8 @@ def transform_incremental():
             if "/" in m:
                 m = m.split("/")[0]
 
-            if m.startswith(("77", "78", "79")):
-                return "962" + m
+            if len(m) == 9 and m.startswith(("77","78","79")):
+               return "962" + m
 
             return m
 
